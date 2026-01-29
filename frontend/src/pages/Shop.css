@@ -1,0 +1,17 @@
+.shop {
+  padding: 80px 60px;
+  background: #ffffff;
+  text-align: center;
+}
+
+.shop h2 {
+  font-size: 36px;
+  margin-bottom: 50px;
+  color: #1b5e20;
+}
+
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 30px;
+}

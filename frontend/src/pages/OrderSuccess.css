@@ -1,0 +1,35 @@
+.order-success {
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+}
+
+.success-box {
+  background: #f3faf3;
+  padding: 50px;
+  border-radius: 25px;
+  text-align: center;
+  max-width: 500px;
+}
+
+.success-box h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #1b5e20;
+}
+
+.success-box p {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #444;
+}
+
+.success-box button {
+  background: #4caf50;
+  color: white;
+  padding: 12px 28px;
+  border-radius: 25px;
+  font-size: 16px;
+}

@@ -1,0 +1,49 @@
+.hero {
+  min-height: 80vh;
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.45),
+      rgba(0, 0, 0, 0.45)
+    ),
+    url("https://images.unsplash.com/photo-1506806732259-39c2d0268443");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-content {
+  max-width: 1200px;
+  width: 100%;
+  padding: 0 40px;
+  color: white;
+}
+
+.hero-tag {
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #b7e4c7;
+  margin-bottom: 12px;
+}
+
+.hero-content h1 {
+  font-size: 56px;
+  margin-bottom: 20px;
+}
+
+.hero-desc {
+  font-size: 17px;
+  max-width: 520px;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.hero-btn {
+  padding: 14px 32px;
+  font-size: 16px;
+  border-radius: 30px;
+  border: none;
+  background: #4caf50;
+  color: white;
+  cursor: pointer;
+}

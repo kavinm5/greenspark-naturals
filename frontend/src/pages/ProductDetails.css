@@ -1,0 +1,42 @@
+.product-details {
+  padding: 80px 60px;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 50px;
+  align-items: center;
+}
+
+.details-grid img {
+  width: 100%;
+  border-radius: 20px;
+}
+
+.details-info h2 {
+  font-size: 32px;
+  margin-bottom: 15px;
+  color: #1b5e20;
+}
+
+.details-info .price {
+  font-size: 22px;
+  color: #2e7d32;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.details-info .desc {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.details-info button {
+  background: #4caf50;
+  color: white;
+  padding: 12px 28px;
+  border-radius: 30px;
+}

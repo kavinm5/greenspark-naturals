@@ -1,0 +1,35 @@
+.why {
+  padding: 80px 60px;
+  background-color: #f3faf3;
+  text-align: center;
+}
+
+.why h2 {
+  font-size: 36px;
+  margin-bottom: 50px;
+  color: #1b5e20;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+.why-card {
+  background: white;
+  padding: 35px 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.why-card h3 {
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.why-card p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+}
