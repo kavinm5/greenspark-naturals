@@ -1,14 +1,27 @@
 import { useParams } from "react-router-dom";
-import products from "../data/products";
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
 import "./ProductDetails.css";
 
 export default function ProductDetails() {
   const { id } = useParams();
-  const product = products.find((p) => p.id === parseInt(id));
+  const [product, setProduct] = useState(null);
+  const { addToCart } = useContext(CartContext);
+
+  useEffect(() => {
+    fetch(`http://127.0.0.1:8000/api/products/${id}`)
+      .then((res) => res.json())
+      .then((data) => setProduct(data));
+  }, [id]);
 
   if (!product) {
+    return <h2 style={{ textAlign: "center" }}>Loading...</h2>;
+  }
+
+  if (product.error) {
     return <h2 style={{ textAlign: "center" }}>Product not found</h2>;
   }
 
@@ -25,7 +38,9 @@ export default function ProductDetails() {
             <p className="price">₹ {product.price}</p>
             <p className="desc">{product.description}</p>
 
-            <button>Add to Cart</button>
+            <button onClick={() => addToCart(product)}>
+              Add to Cart
+            </button>
           </div>
         </div>
       </section>

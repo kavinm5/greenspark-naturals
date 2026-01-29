@@ -1,16 +1,51 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./Checkout.css";
 
 export default function Checkout() {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, clearCart } = useContext(CartContext);
+  const navigate = useNavigate();
 
   const total = cartItems.reduce(
     (sum, item) => sum + item.price,
     0
   );
+
+  const placeOrder = async () => {
+    if (cartItems.length === 0) {
+      alert("Your cart is empty");
+      return;
+    }
+
+    const orderData = {
+      full_name: document.querySelector('input[placeholder="Full Name"]').value,
+      mobile: document.querySelector('input[placeholder="Mobile Number"]').value,
+      address: document.querySelector('input[placeholder="Address"]').value,
+      city: document.querySelector('input[placeholder="City"]').value,
+      pincode: document.querySelector('input[placeholder="Pincode"]').value,
+      items: cartItems,
+      total
+    };
+
+    const response = await fetch("http://127.0.0.1:8000/api/orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(orderData)
+    });
+
+    if (response.ok) {
+      clearCart();
+      navigate("/order-success");
+    } else {
+      alert("Failed to place order");
+    }
+  };
+
 
   return (
     <>
@@ -30,7 +65,9 @@ export default function Checkout() {
             <input type="text" placeholder="City" required />
             <input type="text" placeholder="Pincode" required />
 
-            <button type="button">Place Order</button>
+            <button type="button" onClick={placeOrder}>
+              Place Order
+            </button>
           </form>
 
           {/* ORDER SUMMARY */}
