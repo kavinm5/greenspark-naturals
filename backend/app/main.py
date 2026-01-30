@@ -1,8 +1,15 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
 
+from .dependencies import get_current_user
+from .auth import router as auth_router
+from .admin_auth import router as admin_router
+from .admin_products import router as admin_product_router
+from .admin_orders import router as admin_orders_router
+
+# ---------------- CREATE APP ----------------
 app = FastAPI(title="GS Store API")
 
 # ---------------- CORS ----------------
@@ -14,7 +21,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ---------------- DUMMY DATA (DB later) ----------------
+# ---------------- REGISTER ROUTERS ----------------
+app.include_router(auth_router)
+app.include_router(admin_router)
+app.include_router(admin_product_router)
+app.include_router(admin_orders_router)
+
+# ---------------- DUMMY PRODUCTS (TEMP, DB LATER) ----------------
 products = [
     {
         "id": 1,
@@ -39,6 +52,7 @@ products = [
     }
 ]
 
+# ---------------- ORDERS STORAGE (TEMP) ----------------
 orders = []
 
 # ---------------- PRODUCT APIs ----------------
@@ -46,13 +60,15 @@ orders = []
 def get_products():
     return products
 
-
-@app.get("/api/products/{product_id}")
-def get_product(product_id: int):
-    for product in products:
-        if product["id"] == product_id:
-            return product
-    return {"error": "Product not found"}
+# ---------------- PROFILE API (PROTECTED) ----------------
+@app.get("/api/profile")
+def get_profile(current_user=Depends(get_current_user)):
+    return {
+        "id": str(current_user.id),
+        "name": current_user.name,
+        "email": current_user.email,
+        "phone": current_user.phone
+    }
 
 # ---------------- ORDER MODELS ----------------
 class OrderItem(BaseModel):
@@ -61,21 +77,24 @@ class OrderItem(BaseModel):
     price: int
     quantity: int
 
-
 class Order(BaseModel):
-    full_name: str
-    mobile: str
+    items: List[OrderItem]
+    total: int
     address: str
     city: str
     pincode: str
-    items: List[OrderItem]
-    total: int
+    mobile: str
 
-# ---------------- ORDER API ----------------
+# ---------------- ORDER API (PROTECTED) ----------------
 @app.post("/api/orders")
-def create_order(order: Order):
+def create_order(
+    order: Order,
+    current_user=Depends(get_current_user)
+):
     order_data = order.dict()
+    order_data["user_id"] = str(current_user.id)
     order_data["order_id"] = len(orders) + 1
+    order_data["status"] = "Pending"
 
     orders.append(order_data)
 
