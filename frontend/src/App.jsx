@@ -9,6 +9,13 @@ import AdminLogin from "./admin/AdminLogin";
 import AdminDashboard from "./admin/AdminDashboard";
 import Products from "./admin/Products";
 import Orders from "./admin/Orders";
+import AdminRoute from "./admin/AdminRoute";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import MyOrders from "./pages/MyOrders";
+
+
+
 
 function App() {
   return (
@@ -20,9 +27,24 @@ function App() {
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/order-success" element={<OrderSuccess />} />
       <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/admin" element={<AdminDashboard />}>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/my-orders" element={<MyOrders />} />
+
+
+
+      <Route
+        path="/admin"
+        element={
+          <AdminRoute>
+            <AdminDashboard />
+          </AdminRoute>
+        }
+      >
         <Route path="products" element={<Products />} />
-        <Route path="orders" element={<Orders />} /></Route>
+        <Route path="orders" element={<Orders />} />
+      </Route>
+
     </Routes>
   );
 }

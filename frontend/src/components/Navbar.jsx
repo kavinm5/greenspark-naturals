@@ -1,27 +1,40 @@
-import "./Navbar.css";
-import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 
-
 export default function Navbar() {
-    return (
-        <nav className="navbar">
-            <div className="navbar-logo">
-                <img src={logo} alt="GreenSpark Naturals Logo" />
-            </div>
+  const user = localStorage.getItem("user_token");
 
-            <ul className="navbar-links">
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/shop">Shop</Link></li>
-                <li><Link to="/cart">Cart</Link></li>
-                <li>About</li>
-                <li>Contact</li>
-            </ul>
+  return (
+    <nav style={{
+      padding: "16px 32px",
+      display: "flex",
+      justifyContent: "space-between",
+      borderBottom: "1px solid #eee"
+    }}>
+      <h2 style={{ color: "#2e7d32" }}>GreenSpark Naturals</h2>
 
+      <div style={{ display: "flex", gap: 20 }}>
+        <Link to="/">Home</Link>
+        <Link to="/shop">Shop</Link>
 
-            <div className="navbar-actions">
-                <button className="login-btn">Login</button>
-            </div>
-        </nav>
-    );
+        {user ? (
+          <>
+            <Link to="/my-orders">My Orders</Link>
+            <button
+              onClick={() => {
+                localStorage.removeItem("user_token");
+                window.location.href = "/";
+              }}
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
+          </>
+        )}
+      </div>
+    </nav>
+  );
 }

@@ -2,12 +2,14 @@ from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
+from .database import get_db
 
 from .dependencies import get_current_user
 from .auth import router as auth_router
 from .admin_auth import router as admin_router
 from .admin_products import router as admin_product_router
 from .admin_orders import router as admin_orders_router
+from .models import Order
 
 # ---------------- CREATE APP ----------------
 app = FastAPI(title="GS Store API")
@@ -69,6 +71,17 @@ def get_profile(current_user=Depends(get_current_user)):
         "email": current_user.email,
         "phone": current_user.phone
     }
+
+@app.get("/api/my-orders")
+def get_my_orders(
+    current_user = Depends(get_current_user),
+    db = Depends(get_db)
+):
+    orders = db.query(Order).filter(
+        Order.user_id == current_user.id
+    ).all()
+
+    return orders
 
 # ---------------- ORDER MODELS ----------------
 class OrderItem(BaseModel):
