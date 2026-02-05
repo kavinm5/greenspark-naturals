@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { apiRequest } from "../services/api";
 import ProductCard from "./ProductCard";
 import "./FeaturedProducts.css";
 
@@ -6,18 +7,22 @@ export default function FeaturedProducts() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/products")
-      .then((res) => res.json())
-      .then((data) => setProducts(data));
+    apiRequest("/api/products").then((data) => {
+      setProducts(data.slice(0, 3));
+    });
   }, []);
 
   return (
-    <section className="featured">
-      <h2>Featured Products</h2>
+    <section className="gs-featured">
+      <h2 className="gs-title">Featured Products</h2>
 
-      <div className="product-grid">
+      <div className="gs-grid">
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard
+            key={product.id}
+            product={product}
+            hideAddButton={false}
+          />
         ))}
       </div>
     </section>

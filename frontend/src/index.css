@@ -15,12 +15,12 @@
   background-color: #ffffff;
 }
 
-/* ===== BODY FIX (VERY IMPORTANT) ===== */
+/* ===== BODY (CRITICAL FIX) ===== */
 body {
   width: 100%;
   min-height: 100vh;
   background-color: #ffffff;
-  overflow-x: hidden; /* prevents right-side black space */
+  overflow-x: hidden;
 }
 
 /* ===== ROOT CONTAINER ===== */
